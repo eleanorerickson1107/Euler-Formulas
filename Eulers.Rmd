@@ -1,0 +1,118 @@
+---
+title: "Euler"
+author: "Ellie"
+date: "2024-04-04"
+output: html_document
+---
+
+Insert your derivative formula in "theformula":
+Example: If your formula is y'=1+y^2 enter it as "theformula=1+y^2"
+Make sure to use "^" for exponents, "*" for multiplication, and "/" for division!
+The function below accepts only y and t variables. Substitute t for x!
+```{r}
+y_derive=function(t,y){
+#enter your fomula below in theformula varible!
+  theformula=1+y^2
+  }
+```
+
+
+Forward Euler's Method (don't touch, just run):
+```{r}
+Euler=function(h,n,t_var,y_var,results){
+  mat <- matrix(ncol=2, nrow=n)
+  colnames(mat) <- c("t", "y")  
+  for (i in 1:n) {
+    y_d=y_derive(t_var,y_var)
+    y_var=y_var+h*y_d
+    mat[i,] <- c(t_var+h,y_var)
+    t_var=t_var+h
+  }
+    if (results=="table") {
+    data.frame(mat)
+  } else {
+    print("Euler")
+    print(h)
+    print.default(mat[n,2],11)
+  }
+}
+```
+
+Improved Euler's Method or Huen's Method (don't touch, just run):
+```{r}
+Heun=function(h,n,t_var,y_var,results){
+  mat <- matrix(ncol=2, nrow=n)
+  colnames(mat) <- c("t", "y")  
+  for (i in 1:n) {
+   y_d=y_derive(t_var,y_var)
+    t_n=t_var+h
+    y_n=y_var+h*y_d
+    
+    y_var=y_var+0.5*h*y_derive(t_n,y_n)
+  
+   mat[i,] <- c(t_var+h,y_var)
+    t_var=t_var+h
+  }
+  if (results=="table") {
+    data.frame(mat)
+  } else {
+    print("Heun")
+    print(h)
+    print.default(mat[n,5],11)
+  }
+}
+```
+
+
+Runge-Kutta Method (don't touch, just run):
+```{r}
+RungeKutta=function(h,n,t_var,y_var,results){
+  mat <- matrix(ncol=6, nrow=n)
+  colnames(mat) <- c("t", "kn1", "kn2", "kn3", "kn4", "y")  
+  for (i in 1:n) {
+    kn1=y_derive(t_var,y_var)
+    kn2t=t_var+0.5*h
+    kn2y=y_var+0.5*h*kn1
+    kn2=y_derive(kn2t,kn2y)
+    kn3y=y_var+0.5*h*kn2
+    kn3=y_derive(kn2t,kn3y)
+    kn4t=t_var+h
+    kn4y=y_var+h*kn3
+    kn4=y_derive(kn4t,kn4y)
+    y_var=y_var+h*((kn1+2*kn2+2*kn3+kn4)/6)
+  
+   mat[i,] <- c(t_var+h,kn1, kn2, kn3, kn4, y_var)
+   t_var=t_var+h
+  }
+  if (results=="table") {
+    data.frame(mat)
+  } else {
+    print("Runge-Kutta")
+    print(h)
+    print.default(mat[n,6],11)
+  }
+}
+```
+
+The order is as follows:
+function(step size, n, initial t, initial y, "table"). 
+
+Step size refers to h.
+n refers to t_1 or x_1
+initial t refers to t_0 or x_0
+initial y refers to y_0
+
+The functions can be:
+Euler(step size, n, initial t, initial y, "table") 
+Heun(step size, n, initial t, initial y, "table") 
+RungeKutta(step size, n, initial t, initial y, "table") 
+Use "#" for functions you are NOT using.
+```{r}
+#Euler(1,5,0,0,"table")
+#Heun(0.05,20,0,1,"table")
+#RungeKutta(0.025,40,0,2,"table")
+```
+
+
+
+
