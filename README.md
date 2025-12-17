@@ -112,8 +112,41 @@ Output:
     >  y 
     > Inf #Final y
 
+# Jupyter Notebook Version
+You will need to edit Block 1a to add in your step size, h, either your final t/x or numbrt of iterations, n, and your initial t/x (initial_t) or initial y (initial_y).
+Example:
+
+  h=0.5
+  n=10
+  initial_t=0
+  initial_y=2
+
+If in n you entered a final x/t, you must untag this line:
+
+    iteration=n/h
+
+If n is just the number of iterations you would like, you can ignore Block 1b
+
+Then run the Block 1 and make sure your iteration is accepted and it has your desire number of iterations.
+
+In Block 2, add your derivative formula in theformula variable. It only accepts variables of t and y. If you have x and y, substitute the x for t. For example, you would enter $x^2+y+1$ in theformula like this:
+
+      def y_derive(t,y):
+        theformula=x**2+y+1
+        return theformula
+Note: Make sure you use Python language for math formulas such as "\*" for multiplication, "/" for division, and "\*\*" for exponents. You can represent square roots like this "\*\*(1/2)"
+
+Block 3, you can test your derivative equation, you can enter any number in the varibles t and y. Make sure to get the output of "formula test passed"
+
+For Block 4, untag the method you would like to use, for example if you would like to use Runge-Kutta Method, have your code look like this:
+
+    #func=Euler(h,int(iteration),initial_t,initial_y)
+    #func=Heun(h,int(iteration),initial_t,initial_y)
+    func=RungeKutta(h,int(iteration),initial_t,initial_y)
+
+Block 5 will give you the results for each iteration and Block 6 will give you the solution.
 
 # Limitations
 
-Keep in mind about the limitation about what minimum and maximum values RStudio can handle. If your output is "Inf," that is because the value is out of range for R to handle.
+Keep in mind about the limitation about what minimum and maximum values RStudio and Python/Jupyter Notebook can handle. If your output is "Inf" (in R) or "Overflow" (in Jupyter Notebook), that is because the value is out of range for R to handle.
 - From what I have tested, I got R to handle a value up to $1.797693*10^{308}$.
